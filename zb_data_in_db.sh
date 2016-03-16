@@ -20,7 +20,7 @@ mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer2',2,2)"
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer2',2,2)"
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer2',2,2)"
-                                                                                                             
+
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer3',3,3)"
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer3',3,3)"
 mysql -p2468 -u root -e "use ask_db; insert into ask_db.qa_answer(text, question_id, author_id) VALUES ('answer3',3,3)"

@@ -20,7 +20,11 @@
 /bin/echo "GUNICORN LOG DJANGO:"
 /usr/bin/sudo /usr/bin/tail /var/log/gunicorn/gunicorn-django.conf.log
 
+# Перезапустить MySQL
+/etc/init.d/mysql restart
+
+# Смотрим сокеты
 /bin/echo
 /bin/echo "NETSTAT"
 /usr/bin/sudo /bin/netstat -nlp --ip | grep ":80"
-
+/usr/bin/sudo /bin/netstat -nlp --ip | grep ":33"
