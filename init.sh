@@ -21,7 +21,7 @@
 /usr/bin/sudo /usr/bin/tail /var/log/gunicorn/gunicorn-django.conf.log
 
 # Перезапустить MySQL
-/etc/init.d/mysql restart
+#/etc/init.d/mysql stop && /etc/init.d/mysql start
 
 # Смотрим сокеты
 /bin/echo

@@ -9,6 +9,11 @@
 
 
 {% block content %}
-la-la-la
+
+    {% for quest in questions %}
+        {{ quest.title }}
+	<br>
+    {% endfor %}
+
 {% endblock %}
 
