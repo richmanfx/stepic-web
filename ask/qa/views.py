@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Create your views here.
 
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -16,13 +15,11 @@ def test(request, *args, **kwargs):
 #####	Главная страница
 @require_GET			# Разрешить только GET- запросы
 def main_page(request):
-#    return HttpResponse('Отработала "main_page".')
+    # return HttpResponse('Отработала "main_page".')
 
     questions = Question.objects.all()		# получить все вопросы    
     questions = questions.order_by('-id')	# последний заданный вопрос - первый в списке
     
 
-    return render(request, 'main_page.html', {
-	'questions':	questions,
-    })
+    return render(request, 'main_page.html', {'questions':	questions})
 
