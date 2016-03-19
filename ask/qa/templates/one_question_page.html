@@ -1,0 +1,26 @@
+<!-- Страница с пагинацией -->
+
+{% extends "base.html" %}
+
+{% block title %}
+    {{ block.super }} Страница одного вопроса.
+{% endblock %}
+
+{% block content %}
+    <h3>
+	Страница одного вопроса
+    </h3>
+
+    <div>
+	{{ question.title }}: {{ question.text }}
+    </div>
+    <br>
+    <div>
+    {% for ans in answers %}
+	 {{ ans.text }}
+	<br>
+    {% endfor %}    
+
+    </div>
+{% endblock %}
+

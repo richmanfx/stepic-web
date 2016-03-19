@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from models import Question, Answer
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
 
 
 #####	test response
@@ -80,3 +81,16 @@ def question_popular(request):
 	'page_object': page_object,
 	'paginator': paginator,
     })
+
+def question(request, q_id):
+    # Получим объект модели с первичным ключом = q_id
+    question = get_object_or_404(Question, pk=q_id)	# если плохой q_id, вернёт 404
+    answers = Answer.objects.all()
+    answers = Answer.objects.filter(question = question)
+    
+    return render(request, 'one_question_page.html', {
+	'question': question,
+	'answers': answers,
+    })
+
+    

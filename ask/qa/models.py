@@ -17,7 +17,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return reverse('questions', kwargs={'id': self.id})
+        return reverse('question', kwargs={'id': self.id})
 
 
 class Answer(models.Model):
@@ -30,4 +30,4 @@ class Answer(models.Model):
         return self.text
 
     def get_url(self):
-        return reverse()
+        return reverse('answer', kwargs={'id': self.id})
