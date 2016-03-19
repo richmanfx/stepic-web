@@ -54,14 +54,14 @@ def my_paginate(request, query_set):
 def question_list_all(request):
     all_questions = Question.objects.all()
     sort_last_questions = all_questions.order_by('-id')
-    questions = sort_last_questions[0:1000]
+    #questions = sort_last_questions[0:1000]
     #limit = request.GET.get('limit', 10)
     # page = request.GET.get('page', 1)
     #paginator = Paginator(questions, limit)
     
     #page_object = paginator.page(page)
     
-    page_object, paginator = my_paginate(request, questions)
+    page_object, paginator = my_paginate(request, sort_last_questions)
     paginator.baseurl = '/?page='
     
     return render(request, 'list_all_page.html', {

@@ -7,21 +7,20 @@
 {% endblock %}
 
 {% block content %}
+    Страницы:&nbsp;&nbsp;
     {% for page_num in paginator.page_range %}
 	<a href="{{ paginator.baseurl }}{{ page_num }}">
-	    Страница: {{ page_num }}
+	    {{ page_num }}
         </a>
 	&nbsp;&nbsp;
     {% endfor %}
-    <p>
-    {{ page_object.jbject_list }}
+    <br><br>
+    <div>
 
     {% for quest in page_object %}
-	{{ quest.title }}
+	{{ quest.title }}: {{ quest.text }} -> rating: {{ quest.rating }}
 	<br>
     {% endfor %}    
-    </p>
+    </div>
 {% endblock %}
-
-<!--page_object, questions -->
 
