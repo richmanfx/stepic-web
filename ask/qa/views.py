@@ -69,3 +69,14 @@ def question_list_all(request):
 	'paginator': paginator,
     })
 
+
+def question_popular(request):
+    all_questions = Question.objects.all()
+    sort_last_questions = all_questions.order_by('-rating')
+    page_object, paginator = my_paginate(request, sort_last_questions)
+    paginator.baseurl = '/popular/?page='
+    
+    return render(request, 'list_popular_page.html', {
+	'page_object': page_object,
+	'paginator': paginator,
+    })

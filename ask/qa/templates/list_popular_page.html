@@ -1,14 +1,14 @@
-<!-- Страница с пагинацией -->
+<!-- Страница популярных вопросов -->
 
 {% extends "base.html" %}
 
 {% block title %}
-    {{ block.super }} Страница с пагинацией.
+    {{ block.super }} Популярные вопросы
 {% endblock %}
 
 {% block content %}
     <h3>
-	Страница с пагинацией
+	Популярные вопросы
     </h3>
     Страницы:&nbsp;&nbsp;
     {% for page_num in paginator.page_range %}
