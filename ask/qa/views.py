@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from models import Question, Answer
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
+from forms import AddAskForm
 
 
 #####	test response
@@ -93,4 +94,17 @@ def question(request, q_id):
 	'answers': answers,
     })
 
+
+def ask_add(request):
+    if request.method == 'POST':
+	form = AddAskForm(request.POST)
+	if form.is_valid():
+	    question = form.save()
+	    # url = question.get_url()
+	    # return HttpResponseRedirect(reverse(url))
+	    return HttpResponseRedirect(reverse('question', args=[question.id-1]))
+    else:
+	form = AddAskForm()
+	
+    return render(request, 'ask_add_page.html', {'form': form})
     

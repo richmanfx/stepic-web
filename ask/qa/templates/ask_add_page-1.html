@@ -1,0 +1,17 @@
+<!-- Страница формы ввода вопроса -->
+
+{% extends "base.html" %}
+
+{% block title %}
+    {{ block.super }} Страница формы ввода вопроса.
+{% endblock %}
+
+{% block content %}
+    <h3>
+	Страница формы ввода вопроса.
+    </h3>
+    <div>
+	{{ form.as_p }}
+    </div>
+{% endblock %}
+
