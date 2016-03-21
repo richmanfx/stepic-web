@@ -6,12 +6,8 @@ from models import Question, Answer
 AskForm - форма добавления вопроса
 title - поле заголовка
 text - поле текста вопроса
-AnswerForm - форма добавления ответа
-text - поле текста ответа
-question - поле для связи с вопросом
 '''
-
-class AddAskForm(forms.Form):
+class AskForm(forms.Form):
     title = forms.CharField(max_length=255, label='Заголовок вопроса')
     text = forms.CharField(widget=forms.Textarea, label='Текст вопроса')
 
@@ -19,7 +15,7 @@ class AddAskForm(forms.Form):
 	title = self.cleaned_data['title']
 	if title.strip() == '':
 	    raise forms.ValidationError(
-		u'Поле /"Заголовок вопроса/" не заполнено.'
+		u'Поле Заголовок вопроса не заполнено.'
 	    )
 	return title
 
@@ -27,7 +23,7 @@ class AddAskForm(forms.Form):
 	text = self.cleaned_data['text']
 	if text.strip() == '':
 	    raise forms.ValidationError(
-		u'Поле /"Текст вопроса/" не заполнено.'
+		u'Поле Текст вопроса не заполнено.'
 	    )
 	return text
 
@@ -37,15 +33,39 @@ class AddAskForm(forms.Form):
 	question.save()
 	return question
 
+
+'''
+AnswerForm - форма добавления ответа
+text - поле текста ответа
+question - поле для связи с вопросом
 '''
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
-#    question = forms    
-'''    
+    question = forms.IntegerField(widget=forms.HiddenInput)
     
+    def clean_text(self):
+	text = self.cleaned_data['text']
+	if text.strip() == '':
+	    raise forms.ValidationError(
+		u'Поле Текст ответа не заполнено.'
+	    )
+	return text
     
+    def clean_question(self):    
+	question = self.clean_data['question']
+	if question:
+	    raise forms.ValidationError(
+		u'Требуется номер вопроса'
+	    )
+	return question
+	
+    def save(self):
+	self.cleaned_data['author_id'] = 1
+	answer = Answer(**self.cleaned_data)
+	ansver.save()
+	return answer
     
-    
+
     
     
     

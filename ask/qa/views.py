@@ -6,7 +6,7 @@ from models import Question, Answer
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from forms import AddAskForm
+from forms import AskForm, AnswerForm
 
 
 #####	test response
@@ -94,17 +94,26 @@ def question(request, q_id):
 	'answers': answers,
     })
 
+################################################################
 
 def ask_add(request):
     if request.method == 'POST':
-	form = AddAskForm(request.POST)
+	form = AskForm(request.POST)
 	if form.is_valid():
 	    question = form.save()
 	    # url = question.get_url()
 	    # return HttpResponseRedirect(reverse(url))
 	    return HttpResponseRedirect(reverse('question', args=[question.id-1]))
     else:
-	form = AddAskForm()
+	form = AskForm()
 	
     return render(request, 'ask_add_page.html', {'form': form})
     
+def answer_add(request):
+    if request.method == 'POST':
+	form = AnswerForm(request.POST)
+	if form.is_valid():
+	    answer = form.save()
+	    url = question.get_url()
+	    return HttpResponseRedirect(reverse(url))
+    return HttpResponseRedirect('/')
