@@ -1,0 +1,35 @@
+<!-- Страница формы регистрации пользователя -->
+
+{% extends "base.html" %}
+
+{% block title %}
+    {{ block.super }} Страница формы регистрации пользователя.
+{% endblock %}
+
+{% block content %}
+    <h3>
+	Страница формы регистрации пользователя.
+    </h3>
+    {%  for e in form.non_field_errors %}
+	<div>
+	    {{ e }}
+	</div>
+    {%  endfor %}
+    <form method="post" action="/signup/">
+	{% csrf_token %}
+	<fieldset>
+	    <legend>Форма регистрации пользователя</legend>
+	    {% for field in form %}
+		<div>
+		    <label>{{ field.label }}</label>
+		    <div>{{ field }}</div>
+		</div>
+	    {% endfor %}
+	</fieldset>
+	<br>
+	<div>
+           <button type="submit"> Сохранить </button>
+        </div>
+    </form>
+{% endblock %}
+

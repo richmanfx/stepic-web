@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from models import Question, Answer
+from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth import authenticate, login
 
 '''
 AskForm - форма добавления вопроса
@@ -64,8 +66,44 @@ class AnswerForm(forms.Form):
 	answer = Answer(**self.cleaned_data)
 	ansver.save()
 	return answer
-    
 
+'''    
+username - имя пользователя, логин
+email - email пользователя
+password - пароль пользователя
+'''
+class SignUp(forms.Form):
+    username = forms.CharField(max_length='50')
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    
+    def clean_username(self):
+	username = self.cleaned_data['username']
+	if username.strip() == '':
+	    raise forms.ValidationError(
+		u'Pole USERNAME pustoe!'
+	    )
+	return username
+
+    def clean_email(self):
+	email = self.cleaned_data['email']
+	if email.strip() == '':
+	    raise forms.ValidationError(
+		u'Pole EMAIL pustoe!'
+	    )
+	return email
     
     
-    
+    def clean_password(self):
+	password = self.cleaned_data['password']
+	if password.strip() == '':
+	    raise forms.ValidationError(
+		u'Pole PASSWORD pustoe!'
+	    )
+	return password
+
+    def save(self):
+	user = User.objects.create_user(**self.cleaned_data)
+	user.save()
+	return authenticate(**self.cleaned_data)
+

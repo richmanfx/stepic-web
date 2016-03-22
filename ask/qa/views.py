@@ -6,7 +6,7 @@ from models import Question, Answer
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from forms import AskForm, AnswerForm
+from forms import AskForm, AnswerForm, SignUp
 
 
 #####	test response
@@ -117,3 +117,39 @@ def answer_add(request):
 	    url = question.get_url()
 	    return HttpResponseRedirect(reverse(url))
     return HttpResponseRedirect('/')
+
+#################################################################
+'''
+URL = /signup/
+username - имя пользователя, логин
+email - email пользователя
+password - пароль пользователя
+
+При GET запросе должна отображаться форма для ввода данных, при POST запросе создается 
+новый пользователей, осуществляется вход (login) созданного пользователя на сайт, 
+возвращается редирект на главную страницу.
+'''
+
+
+def signup(request):
+    if request.method == 'POST':
+	form = SignUp(request.POST)
+	if form.is_valid():
+	    sig = form.save()
+	    # url = sig.get_url()
+	    # return HttpResponseRedirect(reverse(url))
+	    return HttpResponseRedirect('/')
+    else:
+	form = SignUp()
+	
+    return render(request, 'signup_page.html', {'form': form})
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
