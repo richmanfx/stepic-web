@@ -42,7 +42,7 @@ text - поле текста ответа
 question - поле для связи с вопросом
 '''
 class AnswerForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea)
+    text = forms.CharField(widget=forms.Textarea, label='Текст ответа')
     question = forms.IntegerField(widget=forms.HiddenInput)
     
     def clean_text(self):
@@ -72,10 +72,10 @@ username - имя пользователя, логин
 email - email пользователя
 password - пароль пользователя
 '''
-class SignUp(forms.Form):
-    username = forms.CharField(max_length='50')
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+class SignupForm(forms.Form):
+    username = forms.CharField(max_length='30', label='Имя пользователя')
+    email = forms.EmailField(label='E-mail')
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
     
     def clean_username(self):
 	username = self.cleaned_data['username']
@@ -107,3 +107,27 @@ class SignUp(forms.Form):
 	user.save()
 	return authenticate(**self.cleaned_data)
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length='30', label='Имя пользователя')
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
+
+    def clean_username(self):
+	username = self.cleaned_data['username']
+	if username.strip() == '':
+	    raise forms.ValidationError(
+		u'Pole USERNAME pustoe!'
+	    )
+	return username
+
+    def clean_password(self):
+	password = self.cleaned_data['password']
+	if password.strip() == '':
+	    raise forms.ValidationError(
+		u'Pole PASSWORD pustoe!'
+	    )
+	return password
+
+    def save(self):
+	user = authenticate(**self.cleaned_data)
+	return user

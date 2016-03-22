@@ -6,7 +6,8 @@ from models import Question, Answer
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from forms import AskForm, AnswerForm, SignUp
+from django.contrib.auth import authenticate, login
+from forms import AskForm, AnswerForm, SignupForm, LoginForm
 
 
 #####	test response
@@ -133,23 +134,32 @@ password - пароль пользователя
 
 def signup(request):
     if request.method == 'POST':
-	form = SignUp(request.POST)
+	form = SignupForm(request.POST)
 	if form.is_valid():
-	    sig = form.save()
-	    # url = sig.get_url()
-	    # return HttpResponseRedirect(reverse(url))
+	    user = form.save()
+	    login(request, user)
 	    return HttpResponseRedirect('/')
     else:
-	form = SignUp()
-	
+	form = SignupForm()
     return render(request, 'signup_page.html', {'form': form})
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+'''
+URL = /login/
+username - имя пользователя
+password - пароль пользователя
+При GET запросе должна отображаться форма для ввода данных, при POST запросе 
+происходит вход (login) на сайт, возвращается редирект на главную страницу. 
+'''
+
+def my_login(request):
+    if request.method == 'POST':
+	form = LoginForm(request.POST)
+	if form.is_valid():
+	    user = authenticate()
+	    if user is not None:
+		login(request, user)
+		return HttpResponseRedirect('/')
+    else:
+	form = LoginForm()
+    return render(request, 'login_page.html', {'form': form})

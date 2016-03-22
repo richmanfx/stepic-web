@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^ask/', ask_add, name='ask'),
     url(r'^answer/', answer_add, name='answer'),
     url(r'^signup/', signup, name='signup'),    
-#    url(r'^login/', login, name='login'),
+    url(r'^login/', my_login, name='my_login'),
 )
