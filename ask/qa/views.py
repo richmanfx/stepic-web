@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from forms import AskForm, AnswerForm, SignupForm, LoginForm
+from django.contrib.sessions.models import Session
 
 
 #####	test response
@@ -104,7 +105,7 @@ def ask_add(request):
 	    question = form.save()
 	    # url = question.get_url()
 	    # return HttpResponseRedirect(reverse(url))
-	    return HttpResponseRedirect(reverse('question', args=[question.id-1]))
+	    return HttpResponseRedirect(reverse('question', args=[question.id]))
     else:
 	form = AskForm()
 	
@@ -126,9 +127,9 @@ username - имя пользователя, логин
 email - email пользователя
 password - пароль пользователя
 
-При GET запросе должна отображаться форма для ввода данных, при POST запросе создается 
-новый пользователей, осуществляется вход (login) созданного пользователя на сайт, 
-возвращается редирект на главную страницу.
+При GET запросе должна отображаться форма для ввода данных, при POST запросе
+создается новый пользователь, осуществляется вход (login) созданного 
+пользователя на сайт, возвращается редирект на главную страницу.
 '''
 
 
@@ -144,6 +145,8 @@ def signup(request):
     return render(request, 'signup_page.html', {'form': form})
     
     
+    
+    
 '''
 URL = /login/
 username - имя пользователя
@@ -156,10 +159,13 @@ def my_login(request):
     if request.method == 'POST':
 	form = LoginForm(request.POST)
 	if form.is_valid():
-	    user = authenticate()
+	    #url = request.POST.get('continue', '/')
+	    user = form.save()
 	    if user is not None:
 		login(request, user)
-		return HttpResponseRedirect('/')
+		response = HttpResponseRedirect('/')
+		return response
     else:
 	form = LoginForm()
+		
     return render(request, 'login_page.html', {'form': form})

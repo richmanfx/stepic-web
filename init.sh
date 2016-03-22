@@ -23,6 +23,9 @@
 # Перезапустить MySQL
 #/etc/init.d/mysql stop && /etc/init.d/mysql start
 
+# Изменить права на базу SQLite
+/usr/bin/sudo /bin/chmod 777 ask/db.sqlite3 && /usr/bin/sudo /bin/chmod 777 ./ask
+
 # Смотрим сокеты
 /bin/echo
 /bin/echo "NETSTAT"
