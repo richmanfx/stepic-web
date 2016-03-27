@@ -30,7 +30,10 @@ class AskForm(forms.Form):
 	return text
 
     def save(self):
-	self.cleaned_data['author_id'] = 1
+	if self._user.is_anonymous():
+    	    self.cleaned_data['author_id'] = 1
+	else:     
+    	    self.cleaned_data['author'] = self._user
 	question = Question(**self.cleaned_data)
 	question.save()
 	return question
@@ -62,7 +65,10 @@ class AnswerForm(forms.Form):
 	return question
 	
     def save(self):
-	self.cleaned_data['author_id'] = 1
+	if self._user.is_anonymous():
+    	    self.cleaned_data['author_id'] = 1
+	else:     
+    	    self.cleaned_data['author'] = self._user
 	answer = Answer(**self.cleaned_data)
 	ansver.save()
 	return answer

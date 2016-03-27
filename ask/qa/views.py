@@ -102,6 +102,7 @@ def ask_add(request):
     if request.method == 'POST':
 	form = AskForm(request.POST)
 	if form.is_valid():
+	    form._user = request.user 
 	    question = form.save()
 	    # url = question.get_url()
 	    # return HttpResponseRedirect(reverse(url))
@@ -139,7 +140,7 @@ def signup(request):
 	if form.is_valid():
 	    user = form.save()
 	    login(request, user)
-	    return HttpResponseRedirect('/')
+	    return HttpResponseRedirect('/login/')
     else:
 	form = SignupForm()
     return render(request, 'signup_page.html', {'form': form})
